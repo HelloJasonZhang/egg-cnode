@@ -4,9 +4,9 @@ const path = require('path');
 module.exports = appInfo => {
   const config = {};
 
-  config.name = 'CNode技术社区';
+  config.name = '发布平台';
 
-  config.description = 'CNode：Node.js专业中文社区';
+  config.description = "发布平台：最专业的发布社区";
 
   config.site_logo = '/public/images/cnodejs_light.svg';
 
@@ -18,7 +18,7 @@ module.exports = appInfo => {
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1519887194138_3450';
 
-  config.host = 'http://cnodejs.org';
+  config.host = "http://localhost:7001";
 
   config.session_secret = 'node_club_secret'; // 务必修改
 
@@ -39,14 +39,14 @@ module.exports = appInfo => {
   config.mini_assets = process.env.EGG_MINI_ASSETS || false;
 
   // 版块
-  config.tabs = [[ 'share', '分享' ], [ 'ask', '问答' ], [ 'job', '招聘' ]];
+  config.tabs = [[ 'electric', '电力资源' ], [ 'pool', '矿池' ]];
 
   // RSS配置
   config.rss = {
-    title: 'CNode：Node.js专业中文社区',
-    link: 'http://cnodejs.org',
+    title: '发布平台：最专业的发布社区',
+    link: 'http://localhost:7001',
     language: 'zh-cn',
-    description: 'CNode：Node.js专业中文社区',
+    description: '发布平台：最专业的发布社区',
     // 最多获取的RSS Item数量
     max_rss_items: 50,
   };
@@ -132,13 +132,13 @@ module.exports = appInfo => {
     passwordField: 'pass',
   };
 
-  // 邮箱配置
+ // 邮箱配置
   config.mail_opts = {
-    host: 'smtp.126.com',
+    host: 'smtp.163.com',
     port: 25,
     auth: {
-      user: 'club@126.com',
-      pass: 'club',
+      user: 'hellojasonzhang@163.com',
+      pass: 'zz123456789',
     },
     ignoreTLS: true,
   };
@@ -158,7 +158,7 @@ module.exports = appInfo => {
   // 每个 IP 每天可创建用户数
   config.create_user_per_ip = 1000;
 
-  config.search = 'google'; // 'google', 'baidu', 'local'
+  config.search = "baidu"; // 'google', 'baidu', 'local'
 
   config.security = {
     csrf: {

@@ -171,11 +171,15 @@ class TopicService extends Service {
     return this.ctx.model.Topic.findByIdAndUpdate(query, update).exec();
   }
 
-  newAndSave(title, content, tab, authorId) {
+  newAndSave(title, content, tab, business, city, electricity, energy, authorId) {
     const topic = new this.ctx.model.Topic();
     topic.title = title;
     topic.content = content;
     topic.tab = tab;
+    topic.business = business;
+    topic.city = city;
+    topic.electricity = electricity; 
+    topic.energy = energy;
     topic.author_id = authorId;
 
     return topic.save();

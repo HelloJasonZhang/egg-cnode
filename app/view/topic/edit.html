@@ -12,7 +12,8 @@
         <% } %>
       </ol>
     </div>
-    <div class='inner post'>
+
+    <div class='inner post'>     
       <% if(typeof edit_error !== 'undefined' && edit_error){ %>
       <div class="alert alert-error">
         <a class="close" data-dismiss="alert" href="#">&times;</a>
@@ -30,27 +31,67 @@
         <form id='create_topic_form' action='/topic/create' method='post'>
           <% } %>
           <fieldset>
-            <span class="tab-selector">选择版块：</span>
-            <select name="tab" id="tab-value">
-              <option value="">请选择</option>
-              <%
-              var tabValue = '';
-              if (typeof tab !== 'undefined') {
-                tabValue = tab;
-              }
-              tabs.forEach(function (pair) {
-                var value = pair[0];
-                var text = pair[1];
-                %>
-                <option value="<%=value%>" <%= tabValue === value ? 'selected': '' %>><%=text%></option>
-
-              <%});%>
-            </select>
-            <span id="topic_create_warn"></span>
-            <textarea autofocus class='span9' id='title' name='title' rows='1'
-                      placeholder="标题字数 10 字以上"
-                    ><%= typeof title !== 'undefined' && title || '' %></textarea>
-
+            <div>
+              <span id="topic_create_warn"></span>
+              <span class="tab-selector-title">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp标题：</span>
+              <textarea autofocus id='title' name='title' rows='1'
+              placeholder="标题字数 10 字以上" style="width: 80%"
+              ><%= typeof title !== 'undefined' && title || '' %></textarea>
+            </div>
+            <div>
+              <span class="tab-selector-select">选择版块：</span>
+              <select name="tab" id="tab-value">
+                <option value="">请选择</option>
+                <%
+                var tabValue = '';
+                if (typeof tab !== 'undefined') {
+                  tabValue = tab;
+                }
+                tabs.forEach(function (pair) {
+                  var value = pair[0];
+                  var text = pair[1];
+                  %>
+                  <option value="<%=value%>" <%= tabValue === value ? 'selected': '' %>><%=text%></option>
+                  
+                  <%});%>
+                </select>
+              </div>
+          
+            <div class="form-group">
+              <span class="tab-selector">发布性质：</span>
+              <select name="business" id="business-value">
+                <option value="">请选择</option>
+                <option value="出售" <%= business === '出售' ? 'selected': '' %>>出售</option>
+                <option value="求购" <%= business === '求购' ? 'selected': '' %>>求购</option>
+              </select>
+            </div>
+            <div>
+              <span class="tab-selector">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp地址：</span>
+              <select name="city" id="city-value">
+                <option value="">请选择</option>
+                <option value="北京" <%= city === '北京' ? 'selected': '' %> >北京</option>
+                <option value="深圳" <%= city === '深圳' ? 'selected': '' %> >深圳</option>
+                <option value="成都" <%= city === '成都' ? 'selected': '' %> >成都</option>
+              </select>
+            </div>
+            <div>
+              <span class="tab-selector">电力性质：</span>
+              <select name="electricity" id="electricity-value">
+                <option value="">请选择</option>
+                <option value="国电" <%= electricity === '国电' ? 'selected': '' %>>国电</option>
+                <option value="地方电" <%= electricity === '地方电' ? 'selected': '' %>>地方电</option>
+                <option value="直供电" <%= electricity === '直供电' ? 'selected': '' %>>直供电</option>
+              </select>
+            </div>
+            <div>
+              <span class="tab-selector">能源性质：</span>
+              <select name="energy" id="energy-value">
+                <option value="">请选择</option>
+                <option value="火电" <%= energy === '火电' ? 'selected': '' %>>火电</option>
+                <option value="水电" <%= energy === '水电' ? 'selected': '' %>>水电</option>
+                <option value="新能源" <%= energy === '新能源' ? 'selected': '' %>>新能源</option>
+              </select>
+            </div>
             <div class='markdown_editor in_editor'>
               <div class='markdown_in_editor'>
                 <textarea class='editor' name='content' rows='20'
@@ -82,13 +123,32 @@
     editor.render($('.editor')[0]);
     // 版块选择的检查，必须选择
     $('#create_topic_form').on('submit', function (e) {
+      var title = $('#title').val();
+      if (!title) {
+        alert('标题不能为空！');
+        $('.submit_btn').button('reset');
+        $('.tab-selector-title').css('color', 'red');
+        return false;
+      } else {
+        $('.tab-selector-title').css('color', '');
+      }
+      if (title.length < 9) {
+        alert('标题字数 10 字以上！');
+        $('.submit_btn').button('reset');
+        $('.tab-selector-title').css('color', 'red');
+        return false;
+      } else {
+        $('.tab-selector-title').css('color', '');
+      }
+
       var tabValue = $('#tab-value').val();
       if (!tabValue) {
         alert('必须选择一个版块！');
         $('.submit_btn').button('reset');
-        $('.tab-selector').css('color', 'red');
+        $('.tab-selector-select').css('color', 'red');
         return false;
       }
+
     });
     // END 版块选择的检查，必须选择
     // 选择招聘版块时，给出提示

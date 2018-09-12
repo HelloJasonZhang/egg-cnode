@@ -21,7 +21,11 @@ module.exports = app => {
     last_reply_at: { type: Date, default: Date.now },
     content_is_html: { type: Boolean },
     tab: { type: String },
-    deleted: { type: Boolean, default: false },
+    business: { type: String },
+    city: { type: String },
+    electricity: { type: String },
+    energy: { type: String },
+    deleted: { type: Boolean, default: false }
   });
 
   TopicSchema.index({ create_at: -1 });

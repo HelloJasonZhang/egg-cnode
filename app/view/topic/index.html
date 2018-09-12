@@ -76,6 +76,35 @@
         <%}%>
 
       </div>
+      <div class="changes">
+        <span>
+        发布性质：<div class="label label-info"><%= topic.business %></div>
+        </span>
+      </div>
+      <div class="changes">
+        <span>
+         地址:
+        <div class="label label-info">
+          <%= topic.city %>
+        </div>
+        </span>
+      </div>
+      <div class="changes">
+        <span>
+        电力性质：
+        <div class="label label-info">
+          <%= topic.electricity %>
+        </div>
+        </span>
+      </div>
+      <div class="changes">
+        <span>
+        能源性质：
+        <div class="label label-info">
+        <%= topic.energy %>
+        </div>
+        </span>
+      </div>
       <% if (current_user) { %>
       <div id="manage_topic">
         <% if (current_user.is_admin) { %>

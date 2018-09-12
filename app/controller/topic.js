@@ -95,8 +95,12 @@ class TopicController extends Controller {
    */
   async create() {
     const { ctx, config } = this;
-    await ctx.render('topic/edit', {
+    await ctx.render("topic/edit", {
       tabs: config.tabs,
+      business: "",
+      city: "",
+      electricity: "",
+      energy: ""
     });
   }
 
@@ -134,6 +138,10 @@ class TopicController extends Controller {
       body.title,
       body.content,
       body.tab,
+      body.business,
+      body.city,
+      body.electricity,
+      body.energy,
       ctx.user._id
     );
 
@@ -169,13 +177,17 @@ class TopicController extends Controller {
       String(topic.author_id) === String(ctx.user._id) ||
       ctx.user.is_admin
     ) {
-      await ctx.render('topic/edit', {
-        action: 'edit',
+      await ctx.render("topic/edit", {
+        action: "edit",
         topic_id: topic._id,
         title: topic.title,
         content: topic.content,
         tab: topic.tab,
-        tabs: config.tabs,
+        business: topic.business,
+        city: topic.city,
+        electricity: topic.electricity,
+        energy: topic.energy,
+        tabs: config.tabs
       });
     } else {
       ctx.status = 403;
