@@ -48,3 +48,8 @@ exports.routerPlus = {
   enable: true,
   package: 'egg-router-plus',
 };
+
+exports.cors = {
+  enable: true,
+  package: 'egg-cors',
+};

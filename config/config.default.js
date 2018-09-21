@@ -115,7 +115,7 @@ module.exports = appInfo => {
    * @see http://mongodb.github.io/node-mongodb-native/2.2/api/Db.html#createCollection
    */
   config.mongoose = {
-    url: process.env.EGG_MONGODB_URL || 'mongodb://127.0.0.1:27017/egg_cnode',
+    url: process.env.EGG_MONGODB_URL || 'mongodb://118.24.147.242:27017/egg_cnode',
     options: {
       server: { poolSize: 20 },
     },
@@ -145,8 +145,8 @@ module.exports = appInfo => {
 
   config.alinode = {
     // 从 `Node.js 性能平台` 获取对应的接入参数
-    appid: process.env.EGG_ALINODE_APPID || '',
-    secret: process.env.EGG_ALINODE_SECRET || '',
+    appid: process.env.EGG_ALINODE_APPID || '76048',
+    secret: process.env.EGG_ALINODE_SECRET || 'f79477ff27ca068a07f54e4c191c42cd60499864',
   };
 
   config.topic = {
@@ -165,6 +165,11 @@ module.exports = appInfo => {
       ignore: '/api/*/*',
     },
   };
+
+  config.cors = {
+    origin:'*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
+  }; 
 
   config.default_page = 1;
   config.default_limit = 20;
