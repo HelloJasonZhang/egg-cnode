@@ -1,6 +1,7 @@
 'use strict';
 
 const Controller = require('egg').Controller;
+const validator = require('validator');
 const _ = require('lodash');
 
 class UserController extends Controller {
@@ -46,6 +47,33 @@ class UserController extends Controller {
       id: user._id,
       avatar_url: user.avatar_url,
     };
+  }
+
+  async login () {
+    const { ctx } = this;
+    const loginname = validator.trim(ctx.query.loginname || '');
+    const pass = validator.trim(ctx.query.pass || '');
+
+    const user = await ctx.service.user.getUserByLoginName(loginname);
+
+    if (!user) {
+      ctx.status = 404;
+      ctx.body = { success: false, error_msg: '用户不存在' };
+      return;
+    } 
+
+    if (ctx.helper.bcompare(pass, user.pass)) {
+      ctx.body = {
+        success: true,
+        loginname: user.loginname,
+        id: user._id,
+        avatar_url: user.avatar_url,
+        token: user.accessToken
+      };
+    } else {
+      ctx.body = { success: false, error_msg: '密码数据错误' };
+      return;      
+    }
   }
 }
 

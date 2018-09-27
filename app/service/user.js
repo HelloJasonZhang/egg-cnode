@@ -71,6 +71,8 @@ class UserService extends Service {
     return this.ctx.model.User.findOne({ email }).exec();
   }
 
+
+
   /*
    * 根据用户ID列表，获取一组用户
    * @param {Array} ids 用户ID列表
@@ -109,6 +111,17 @@ class UserService extends Service {
    */
   getUserByNameAndKey(loginname, key) {
     const query = { loginname, retrieve_key: key };
+    return this.ctx.model.User.findOne(query).exec();
+  }
+
+  /*
+   * 根据查询条件，获取一个用户
+   * @param {String} name 用户名
+   * @param {String} pass 密码
+   * @return {Promise[user]} 承载用户的 Promise 对象
+   */
+  getUserByNameAndPassword(loginname, pass) {
+    const query = { loginname, pass };
     return this.ctx.model.User.findOne(query).exec();
   }
 

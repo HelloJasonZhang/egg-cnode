@@ -15,6 +15,7 @@ module.exports = app => {
   // const createUserLimit = middleware.createUserLimit(config.create_user_per_ip);
 
   // 用户
+  apiV1Router.post('/login', user.login);
   apiV1Router.get('/user/:loginname', user.show);
   apiV1Router.post('/accesstoken', tokenRequired, user.verify);
 
