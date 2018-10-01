@@ -47,19 +47,19 @@ class ReplyController extends Controller {
       return;
     }
 
-    const reply = await ctx.service.reply.newAndSave(content, topicId, ctx.request.user.id, replyId);
+    const reply = await ctx.service.reply.newAndSave(content, topicId, ctx.request.user._id, replyId);
     await ctx.service.topic.updateLastReply(topicId, reply._id);
     // 发送 at 消息，并防止重复 at 作者
     const newContent = content.replace('@' + author.loginname + ' ', '');
-    await ctx.service.at.sendMessageToMentionUsers(newContent, topicId, ctx.request.user.id, reply._id);
+    await ctx.service.at.sendMessageToMentionUsers(newContent, topicId, ctx.request.user._id, reply._id);
 
-    const user = await ctx.service.user.getUserById(ctx.request.user.id);
+    const user = await ctx.service.user.getUserById(ctx.request.user._id);
     user.score += 5;
     user.reply_count += 1;
     await user.save();
 
-    if (topic.author_id.toString() !== ctx.request.user.id.toString()) {
-      await ctx.service.message.sendReplyMessage(topic.author_id, ctx.request.user.id, topic._id, reply._id);
+    if (topic.author_id.toString() !== ctx.request.user._id.toString()) {
+      await ctx.service.message.sendReplyMessage(topic.author_id, ctx.request.user._id, topic._id, reply._id);
     }
 
     ctx.body = {
@@ -75,7 +75,7 @@ class ReplyController extends Controller {
     }, ctx.params);
 
     const replyId = ctx.params.reply_id;
-    const userId = ctx.request.user.id;
+    const userId = ctx.request.user._id;
 
     const reply = await ctx.service.reply.getReplyById(replyId);
 

@@ -54,7 +54,7 @@ class CollectController extends Controller {
   async collect() {
     const { ctx, service } = this;
     const topic_id = ctx.request.body.topic_id;
-    const user_id = ctx.request.user.id;
+    const user_id = ctx.request.user._id;
 
     ctx.validate({
       topic_id: MongoObjectIdSchema,
@@ -96,7 +96,7 @@ class CollectController extends Controller {
   async de_collect() {
     const { ctx, service } = this;
     const topic_id = ctx.request.body.topic_id;
-    const user_id = ctx.request.user.id;
+    const user_id = ctx.request.user._id;
 
     ctx.validate({
       topic_id: MongoObjectIdSchema,

@@ -59,7 +59,11 @@ class TopicController extends Controller {
       body.title,
       body.content,
       body.tab,
-      ctx.request.user.id
+      body.business,
+      body.city,
+      body.electricity,
+      body.energy,
+      ctx.request.user._id
     );
 
     // 发帖用户增加积分,增加发表主题数量
@@ -69,7 +73,7 @@ class TopicController extends Controller {
     await ctx.service.at.sendMessageToMentionUsers(
       body.content,
       topic.id,
-      ctx.request.user.id
+      ctx.request.user._id
     );
 
     ctx.body = {
@@ -187,7 +191,7 @@ class TopicController extends Controller {
     await ctx.service.at.sendMessageToMentionUsers(
       topic.content,
       topic.id,
-      ctx.request.user.id
+      ctx.request.user._id
     );
 
     ctx.body = {
