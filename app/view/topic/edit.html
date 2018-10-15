@@ -106,6 +106,10 @@
 
             </div>
 
+<div id="editor-container">
+
+</div>          
+
             <input type='hidden' id='topic_tags' name='topic_tags' value=''>
             <input type='hidden' name='_csrf' value='<%= csrf %>'>
           </fieldset>
@@ -150,6 +154,15 @@
       }
 
     });
+
+var quill = new Quill('#editor-container', {
+  modules: {
+    toolbar: true
+  },
+  placeholder: 'Compose an epic...',
+  theme: 'snow'
+});
+
     // END 版块选择的检查，必须选择
     // 选择招聘版块时，给出提示
     $('#tab-value').on('change', function () {

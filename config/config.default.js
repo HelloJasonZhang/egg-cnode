@@ -10,7 +10,7 @@ module.exports = appInfo => {
 
   config.site_logo = '/public/images/cnodejs_light.svg';
 
-  config.site_icon = '/public/images/cnode_icon_32.png';
+  config.site_icon = '/public/images/index.png';
 
   // debug 为 true 时，用于本地调试
   config.debug = true;
