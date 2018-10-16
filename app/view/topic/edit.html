@@ -92,24 +92,21 @@
                 <option value="新能源" <%= energy === '新能源' ? 'selected': '' %>>新能源</option>
               </select>
             </div>
-            <div class='markdown_editor in_editor'>
+<!--             <div class='markdown_editor in_editor'>
               <div class='markdown_in_editor'>
                 <textarea class='editor' name='content' rows='20'
                           placeholder='文章支持 Markdown 语法, 请注意标记代码'
                         ><%= typeof content !== 'undefined' && content || '' %></textarea>
-
-                <div class='editor_buttons'>
-                  <input type="submit" class='span-primary submit_btn' data-loading-text="提交中"
-                         value="提交">
-                </div>
               </div>
-
             </div>
-
-<div id="editor-container">
-
-</div>          
-
+ -->        
+            <span class="content-title">话题内容：</span>
+            <div id="editor-container" class="editor tab-selector" style="height: 250px;"></div>           
+              <div class='editor_buttons'>
+                <input type="submit" class='span-primary submit_btn' data-loading-text="提交中" value="提交">
+              </div>        
+            </div>
+            <input id='content-value' name='content' type='hidden'></input><%= typeof content !== 'undefined' && content || '' %>
             <input type='hidden' id='topic_tags' name='topic_tags' value=''>
             <input type='hidden' name='_csrf' value='<%= csrf %>'>
           </fieldset>
@@ -123,8 +120,31 @@
 <%- include('../includes/editor.html') %>
 <script>
   (function () {
-    var editor = new Editor();
-    editor.render($('.editor')[0]);
+    var fonts = ['sofia', 'slabo', 'roboto', 'inconsolata', 'ubuntu'];
+    var Font = Quill.import('formats/font');
+    Font.whitelist = fonts;
+    Quill.register(Font, true);
+
+    var quill = new Quill('#editor-container', {
+      modules: {
+        'syntax': true,
+        'toolbar': [
+          [{ 'font': fonts }, { 'size': [] }],
+          [ 'bold', 'italic', 'underline', 'strike' ],
+          [{ 'color': [] }, { 'background': [] }],
+          [{ 'script': 'super' }, { 'script': 'sub' }],
+          [{ 'header': '1' }, { 'header': '2' }, 'blockquote', 'code-block' ],
+          [{ 'list': 'ordered' }, { 'list': 'bullet'}, { 'indent': '-1' }, { 'indent': '+1' }],
+          [ 'direction', { 'align': [] }],
+          [ 'link', 'image', 'video', 'formula' ],
+          [ 'clean' ]
+        ],
+      },
+      placeholder: '请输入...',
+      theme: 'snow'
+    });
+/*    var editor = new Editor();
+    editor.render($('.editor')[0]);*/
     // 版块选择的检查，必须选择
     $('#create_topic_form').on('submit', function (e) {
       var title = $('#title').val();
@@ -153,15 +173,25 @@
         return false;
       }
 
+      var contentValue = quill.getText(); //editor.getText()
+      console.log('contentValue')
+      console.log('!==')
+      console.log(typeof contentValue !== 'undefined')
+      console.log('===')
+      console.log(typeof contentValue === 'undefined')
+      if (!contentValue) {
+        alert('内容不能为空！');
+        $('.submit_btn').button('reset');
+        $('.content-title').css('color', 'red');
+        var delta = quill.root.innerHTML;
+        console.log(delta)
+        return false;
+      } else {
+
+      }
+
     });
 
-var quill = new Quill('#editor-container', {
-  modules: {
-    toolbar: true
-  },
-  placeholder: 'Compose an epic...',
-  theme: 'snow'
-});
 
     // END 版块选择的检查，必须选择
     // 选择招聘版块时，给出提示
